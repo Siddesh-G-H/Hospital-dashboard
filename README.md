@@ -1,2 +1,15 @@
-# Hospital-dashboard
-Our team, AuthenX, proposes an AI-powered healthcare web platform that helps patients find suitable nearby hospitals based on their symptoms and location. The system prioritizes patients using risk levels and provides a smart token-based queue to reduce waiting time and improve healthcare efficiency.
+## 🏥 Hospital Management Dashboard
+
+The Hospital Dashboard is a real-time queue management system designed for hospital staff to efficiently manage patient flow.
+
+It allows hospitals to:
+
+- Securely log in and access their dashboard  
+- View patients filtered by hospital ID  
+- Automatically sort patients by medical priority  
+- Start and complete treatments  
+- Automatically move to the next patient in queue  
+- Pause or resume token generation  
+- Synchronize updates instantly with the patient application  
+
+All patient data and queue updates are managed through a shared backend and database, ensuring real-time synchronization between patient and hospital systems.
