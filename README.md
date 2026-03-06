@@ -13,3 +13,5 @@ It allows hospitals to:
 - Synchronize updates instantly with the patient application  
 
 All patient data and queue updates are managed through a shared backend and database, ensuring real-time synchronization between patient and hospital systems.
+###Live At
+https://siddesh-g-h.github.io/Hospital-dashboard/
