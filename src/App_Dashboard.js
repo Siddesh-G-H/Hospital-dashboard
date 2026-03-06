@@ -350,7 +350,7 @@ function LoginScreen({ onLogin }) {
               <span>{error}</span>
             </div>
           )}
-
+          
           <button
             type="submit"
             onClick={(e) => { e.preventDefault(); handleSubmit(); }}
@@ -360,6 +360,39 @@ function LoginScreen({ onLogin }) {
           >
             {loading ? "Signing in..." : "Sign In →"}
           </button>
+
+          <div style={{
+            marginTop: 20,
+            background: "#f1f5f9",
+            padding: 16,
+            borderRadius: 8,
+            fontSize: "0.85rem"
+          }}>
+            <strong>Demo Login Credentials</strong>
+
+            <div style={{marginTop:10}}>
+              <div>Admin</div>
+              <div>Email: admin@apollo.com</div>
+              <div>Password: admin123</div>
+              <div>Email:  admin@fortis.com</div>
+              <div>Password: fortis123</div>
+            </div>
+
+            <div style={{marginTop:10}}>
+              <div>Doctor</div>
+              <div>Email: doctor@apollo.com</div>
+              <div>Password: doctor123</div>
+              <div>Email: doctor@manipal.com</div>
+              <div>Password: manipal123</div>
+            </div>
+
+            <div style={{marginTop:10}}>
+              <div>Receptionist</div>
+              <div>Email: reception@apollo.com</div>
+              <div>Password: reception123</div>
+            </div>
+          </div>
+
         </form>
       </div>
     </div>
@@ -373,6 +406,7 @@ function Dashboard({ user, onLogout }) {
   const [filter, setFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentTime, setCurrentTime] = useState(new Date());
+  //const [specializationFilter, setSpecializationFilter] = useState("all");
 
   // Update time every second
   useEffect(() => {
@@ -392,12 +426,26 @@ function Dashboard({ user, onLogout }) {
   // Filter patients
   const filteredPatients = sortedPatients.filter(p => {
     const matchesStatus = filter === "all" || p.status === filter;
+    //const matchesSpecialization =  specializationFilter === "all" || p.specialization === specializationFilter;
+    const matchesDepartment = user.role !== "Doctor" || p.specialization === user.department;
     const matchesSearch = 
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       p.tokenNumber.toString().includes(searchQuery) ||
       p.symptoms.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesStatus && matchesSearch;
+    return matchesStatus && matchesSearch && matchesDepartment;
   });
+
+  // Autofiltering patients
+  // function detectDepartment(symptoms) {
+  //   const s = symptoms.toLowerCase();
+
+  //   if (s.includes("chest") || s.includes("heart")) return "Cardiology";
+  //   if (s.includes("brain") || s.includes("dizziness")) return "Neurology";
+  //   if (s.includes("knee") || s.includes("bone")) return "Orthopedics";
+  //   if (s.includes("skin") || s.includes("rash")) return "Dermatology";
+
+  //   return "General Medicine";
+  // }
 
   // Stats
   const stats = {
@@ -637,6 +685,7 @@ function Dashboard({ user, onLogout }) {
         </div>
 
         <div style={{ padding: 32, maxWidth: 1600, margin: "0 auto" }}>
+          
           {/* Stats Grid */}
           <div style={{
             display: "grid",
@@ -757,6 +806,7 @@ function Dashboard({ user, onLogout }) {
             marginBottom: 24,
             flexWrap: "wrap"
           }}>
+            
             <input
               type="text"
               placeholder="🔍 Search patients by name, token, or symptoms..."
@@ -764,6 +814,18 @@ function Dashboard({ user, onLogout }) {
               onChange={e => setSearchQuery(e.target.value)}
               style={{ flex: 1, minWidth: 300 }}
             />
+            {/* <select
+              value={specializationFilter}
+              onChange={(e) => setSpecializationFilter(e.target.value)}
+            >
+              <option value="all">All Departments</option>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Neurology">Neurology</option>
+              <option value="Orthopedics">Orthopedics</option>
+              <option value="Dermatology">Dermatology</option>
+              <option value="Gastroenterology">Gastroenterology</option>
+              <option value="General Medicine">General Medicine</option>
+            </select> */}
             <div style={{ display: "flex", gap: 8 }}>
               {["all", "waiting", "in_progress", "completed"].map(f => (
                 <button
